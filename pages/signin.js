@@ -4,7 +4,6 @@ import styles from "../styles/signin.module.scss";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import LoginInput from "../components/inputs/loginInput";
 import { useState } from "react";
 import CircledIconBtn from "../components/buttons/circledIconBtn";
@@ -18,6 +17,9 @@ import {
 import axios from "axios";
 import DotLoaderSpinner from "../components/loaders/dotLoader";
 import Router from "next/router";
+import {loginValidation} from "../utils/validations/login";
+import {registerValidation} from "../utils/validations/register";
+
 const initialvalues = {
   login_email: "",
   login_password: "",
@@ -29,9 +31,17 @@ const initialvalues = {
   error: "",
   login_error: "",
 };
+
 export default function signin({ providers, callbackUrl, csrfToken }) {
+
+  console.log("providers",providers)
+  console.log("callbackUrl",callbackUrl)
+  console.log("csrfToken",csrfToken)
+
   const [loading, setLoading] = useState(false);
+
   const [user, setUser] = useState(initialvalues);
+
   const {
     login_email,
     login_password,
@@ -43,38 +53,14 @@ export default function signin({ providers, callbackUrl, csrfToken }) {
     error,
     login_error,
   } = user;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
-  const loginValidation = Yup.object({
-    login_email: Yup.string()
-      .required("Email address is required.")
-      .email("Please enter a valid email address."),
-    login_password: Yup.string().required("Please enter a password"),
-  });
-  const registerValidation = Yup.object({
-    name: Yup.string()
-      .required("What's your name ?")
-      .min(2, "First name must be between 2 and 16 characters.")
-      .max(16, "First name must be between 2 and 16 characters.")
-      .matches(/^[aA-zZ]/, "Numbers and special characters are not allowed."),
-    email: Yup.string()
-      .required(
-        "You'll need this when you log in and if you ever need to reset your password."
-      )
-      .email("Enter a valid email address."),
-    password: Yup.string()
-      .required(
-        "Enter a combination of at least six numbers,letters and punctuation marks(such as ! and &)."
-      )
-      .min(6, "Password must be atleast 6 characters.")
-      .max(36, "Password can't be more than 36 characters"),
-    conf_password: Yup.string()
-      .required("Confirm your password.")
-      .oneOf([Yup.ref("password")], "Passwords must match."),
-  });
+
+
   const signUpHandler = async () => {
     try {
       setLoading(true);
@@ -99,6 +85,7 @@ export default function signin({ providers, callbackUrl, csrfToken }) {
       setUser({ ...user, success: "", error: error.response.data.message });
     }
   };
+
   const signInHandler = async () => {
     setLoading(true);
     let options = {
@@ -116,10 +103,12 @@ export default function signin({ providers, callbackUrl, csrfToken }) {
       return Router.push(callbackUrl || "/");
     }
   };
+
   const country = {
     name: "Morocco",
     flag: "https://cdn-icons-png.flaticon.com/512/197/197551.png?w=360",
   };
+
   return (
     <>
       {loading && <DotLoaderSpinner loading={loading} />}
