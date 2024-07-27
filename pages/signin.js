@@ -72,6 +72,7 @@ export default function SigninPage({ providers, callbackUrl, csrfToken }) {
 				email,
 				password,
 			});
+			console.log("resigterData", data);
 			setUser({ ...user, error: "", success: data.message });
 			setLoading(false);
 			setTimeout(async () => {
@@ -81,8 +82,9 @@ export default function SigninPage({ providers, callbackUrl, csrfToken }) {
 					password: password,
 				};
 				const res = await signIn("credentials", options);
+				console.log("res", res);
 				Router.push("/");
-			}, 10000);
+			}, 2000);
 		} catch (error) {
 			setLoading(false);
 			setUser({ ...user, success: "", error: error.response.data.message });
