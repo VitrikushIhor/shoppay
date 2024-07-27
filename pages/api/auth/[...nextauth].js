@@ -9,7 +9,9 @@ import GoogleProvider from 'next-auth/providers/google';
 import clientPromise from './lib/mongodb';
 import User from '../../../models/User';
 import db from '../../../utils/db';
+
 db.connectDb();
+
 export default NextAuth({
 	adapter: MongoDBAdapter(clientPromise),
 	providers: [

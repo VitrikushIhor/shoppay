@@ -274,13 +274,26 @@ export async function getServerSideProps(context) {
 			},
 		};
 	}
-	const csrfToken = await getCsrfToken(context);
-	const providers = Object.values(await getProviders());
-	return {
-		props: {
-			providers,
-			csrfToken,
-			callbackUrl,
-		},
-	};
+
+	try {
+		const csrfToken = await getCsrfToken(context);
+		const providers = await getProviders();
+		return {
+			props: {
+				providers: providers ? Object.values(providers) : [],
+				csrfToken,
+				callbackUrl,
+			},
+		};
+	} catch (error) {
+		console.error("Error fetching providers or CSRF token:", error);
+		return {
+			props: {
+				providers: [],
+				csrfToken: null,
+				callbackUrl: "",
+				error: "Failed to fetch providers or CSRF token",
+			},
+		};
+	}
 }
