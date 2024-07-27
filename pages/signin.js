@@ -82,7 +82,7 @@ export default function SigninPage({ providers, callbackUrl, csrfToken }) {
 				};
 				const res = await signIn("credentials", options);
 				Router.push("/");
-			}, 2000);
+			}, 10000);
 		} catch (error) {
 			setLoading(false);
 			setUser({ ...user, success: "", error: error.response.data.message });
