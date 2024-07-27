@@ -9,19 +9,24 @@ import Shipping from "../components/checkout/shipping";
 import Products from "../components/checkout/products";
 import Payment from "../components/checkout/payment";
 import Summary from "../components/checkout/summary";
+
 export default function checkout({ cart, user }) {
+
   const [addresses, setAddresses] = useState(user?.address || []);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [totalAfterDiscount, setTotalAfterDiscount] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
+console.log(addresses)
+
   useEffect(() => {
-    let check = addresses.find((ad) => ad.active == true);
+    let check = addresses?.find((ad) => ad.active == true)
     if (check) {
       setSelectedAddress(check);
     } else {
       setSelectedAddress("");
     }
   }, [addresses]);
+
   return (
     <>
       <Header />
@@ -53,11 +58,15 @@ export default function checkout({ cart, user }) {
   );
 }
 export async function getServerSideProps(context) {
+
   db.connectDb();
+
   const session = await getSession(context);
   const user = await User.findById(session.user.id);
   const cart = await Cart.findOne({ user: user._id });
+
   db.disconnectDb();
+
   if (!cart) {
     return {
       redirect: {
@@ -65,6 +74,7 @@ export async function getServerSideProps(context) {
       },
     };
   }
+
   return {
     props: {
       cart: JSON.parse(JSON.stringify(cart)),

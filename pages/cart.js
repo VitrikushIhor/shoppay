@@ -14,15 +14,22 @@ import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { saveCart } from "../requests/user";
 export default function cart() {
+
   const Router = useRouter();
+
   const { data: session } = useSession();
+
   const [selected, setSelected] = useState([]);
+
   const { cart } = useSelector((state) => ({ ...state }));
+
   const dispatch = useDispatch();
+
   //-----------------------
   const [shippingFee, setShippingFee] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
+
   useEffect(() => {
     setShippingFee(
       selected.reduce((a, c) => a + Number(c.shipping), 0).toFixed(2)
@@ -34,6 +41,7 @@ export default function cart() {
       ).toFixed(2)
     );
   }, [selected]);
+
   //-----------------------
   const saveCartToDbHandler = async () => {
     if (session) {
@@ -43,6 +51,7 @@ export default function cart() {
       signIn();
     }
   };
+
   return (
     <>
       <Header />

@@ -28,15 +28,18 @@ export default function Infos({ product, setActiveImg }) {
   useEffect(() => {
     dispatch(hideDialog());
   }, []);
+
   useEffect(() => {
     setSize("");
     setQty(1);
   }, [router.query.style]);
+
   useEffect(() => {
     if (qty > product.quantity) {
       setQty(product.quantity);
     }
   }, [router.query.size]);
+
   const addToCartHandler = async () => {
     if (!router.query.size) {
       setError("Please Select a size");
@@ -45,16 +48,20 @@ export default function Infos({ product, setActiveImg }) {
     const { data } = await axios.get(
       `/api/product/${product._id}?style=${product.style}&size=${router.query.size}`
     );
+
     if (qty > data.quantity) {
       setError(
         "The Quantity you have choosed is more than in stock. Try and lower the Qty"
       );
+
     } else if (data.quantity < 1) {
       setError("This Product is out of stock.");
       return;
+
     } else {
       let _uid = `${data._id}_${product.style}_${router.query.size}`;
       let exist = cart.cartItems.find((p) => p._uid === _uid);
+
       if (exist) {
         let newCart = cart.cartItems.map((p) => {
           if (p._uid == exist._uid) {
@@ -62,7 +69,9 @@ export default function Infos({ product, setActiveImg }) {
           }
           return p;
         });
+
         dispatch(updateCart(newCart));
+
       } else {
         dispatch(
           addToCart({
@@ -75,7 +84,7 @@ export default function Infos({ product, setActiveImg }) {
       }
     }
   };
-  ///---------------------------------
+
   const handleWishlist = async () => {
     try {
       if (!session) {
@@ -110,6 +119,7 @@ export default function Infos({ product, setActiveImg }) {
       );
     }
   };
+
   return (
     <div className={styles.infos}>
       <DialogModal />

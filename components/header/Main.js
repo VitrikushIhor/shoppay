@@ -6,9 +6,13 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useRouter } from "next/router";
 export default function Main({ searchHandler }) {
+
   const router = useRouter();
+
   const [query, setQuery] = useState(router.query.search || "");
-  const { cart } = useSelector((state) => ({ ...state }));
+
+  const  cart  = useSelector((state) => state.cart.cartItems);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (router.pathname !== "/browse") {
@@ -41,7 +45,7 @@ export default function Main({ searchHandler }) {
         <Link href="/cart">
           <a className={styles.cart}>
             <FaOpencart />
-            <span>0</span>
+            <span>{cart && cart.length ? cart.length :0}</span>
           </a>
         </Link>
       </div>

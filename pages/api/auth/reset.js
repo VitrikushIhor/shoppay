@@ -1,11 +1,7 @@
 import nc from "next-connect";
 import bcrypt from "bcrypt";
-import { validateEmail } from "../../../utils/validation";
 import db from "../../../utils/db";
 import User from "../../../models/User";
-import { createActivationToken, createResetToken } from "../../../utils/tokens";
-import { sendEmail } from "../../../utils/sendEmails";
-import { resetEmailTemplate } from "../../../emails/resetEmailTemplate";
 const handler = nc();
 
 handler.put(async (req, res) => {

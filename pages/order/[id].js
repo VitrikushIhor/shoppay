@@ -10,29 +10,33 @@ import axios from "axios";
 import StripePayment from "../../components/stripePayment";
 import { getSession } from "next-auth/react";
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "PAY_REQUEST":
-      return { ...state, loading: true };
-    case "PAY_SUCCESS":
-      return { ...state, loading: false, success: true };
-    case "PAY_FAIL":
-      return { ...state, loading: false, error: action.payload };
-    case "PAY_RESET":
-      return { ...state, loading: false, success: false, error: false };
-  }
-}
+
+
 export default function order({
   orderData,
   paypal_client_id,
   stripe_public_key,
 }) {
+  function reducer(state, action) {
+    switch (action.type) {
+      case "PAY_REQUEST":
+        return { ...state, loading: true };
+      case "PAY_SUCCESS":
+        return { ...state, loading: false, success: true };
+      case "PAY_FAIL":
+        return { ...state, loading: false, error: action.payload };
+      case "PAY_RESET":
+        return { ...state, loading: false, success: false, error: false };
+    }
+  }
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-  const [dispatch] = useReducer(reducer, {
+
+  const [state,dispatch] = useReducer(reducer, {
     loading: true,
     error: "",
     success: "",
   });
+
   useEffect(() => {
     if (!orderData._id) {
       dispatch({
@@ -52,6 +56,7 @@ export default function order({
       });
     }
   }, [order]);
+
   function createOrderHanlder(data, actions) {
     return actions.order
       .create({
@@ -67,23 +72,29 @@ export default function order({
         return order_id;
       });
   }
+  console.log(orderData._id);
   function onApproveHandler(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
         dispatch({ type: "PAY_REQUEST" });
+
         const { data } = await axios.put(
           `/api/order/${orderData._id}/pay`,
           details
         );
+
         dispatch({ type: "PAY_SUCCESS", payload: data });
+
       } catch (error) {
         dispatch({ type: "PAY_ERROR", payload: error });
       }
     });
   }
+
   function onErroHandler(error) {
     console.log(error);
   }
+
   return (
     <>
       <Header country="country" />

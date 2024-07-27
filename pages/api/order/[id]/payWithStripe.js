@@ -16,7 +16,7 @@ handler.post(async (req, res) => {
     const payment = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100),
       currency: "USD",
-      description: "M74JJI Store",
+      description: "Shoppay",
       payment_method: id,
       confirm: true,
     });

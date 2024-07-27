@@ -14,7 +14,6 @@ import Infos from "../../components/productPage/infos";
 import Reviews from "../../components/productPage/reviews";
 import ProductsSwiper from "../../components/productsSwiper";
 export default function product({ product, related }) {
-  console.log(related)
   const [activeImg, setActiveImg] = useState("");
   const country = {
     name: "Morocco",
@@ -148,8 +147,6 @@ export async function getServerSideProps(context) {
 
 
   db.disconnectDb();
-
-  console.log("related", related);
 
   return {
     props: {

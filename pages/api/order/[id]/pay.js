@@ -6,9 +6,8 @@ import db from "../../../../utils/db";
 const handler = nc().use(auth);
 
 handler.put(async (req, res) => {
-  console.log("hello from api");
   await db.connectDb();
-  const order = await Order.findById(req.qurey.id);
+  const order = await Order.findById(req.query.id);
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
