@@ -4,12 +4,14 @@ import { sizesList } from "../../../../data/sizes";
 import styles from "./styles.module.scss";
 
 export default function Sizes({ sizes, product, setProduct }) {
+
   const [noSize, setNoSize] = useState(false);
   const handleSize = (i, e) => {
     const values = [...sizes];
     values[i][e.target.name] = e.target.value;
     setProduct({ ...product, sizes: values });
   };
+
   const handleRemove = (i) => {
     if (sizes.length > 1) {
       const values = [...sizes];
@@ -17,6 +19,7 @@ export default function Sizes({ sizes, product, setProduct }) {
       setProduct({ ...product, sizes: values });
     }
   };
+
   return (
     <div>
       <div className={styles.header}>Sizes / Quantity /Price</div>

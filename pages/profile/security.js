@@ -8,12 +8,15 @@ import CircledIconBtn from "../../components/buttons/circledIconBtn";
 import LoginInput from "../../components/inputs/loginInput";
 import styles from "../../styles/profile.module.scss";
 import axios from "axios";
+
 export default function security({ user, tab }) {
+
   const [current_password, setCurrent_password] = useState("");
   const [password, setPassword] = useState("");
   const [conf_password, setConf_password] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+
   const validate = Yup.object({
     current_password: Yup.string()
       .required(
@@ -31,6 +34,7 @@ export default function security({ user, tab }) {
       .required("Confirm your password.")
       .oneOf([Yup.ref("password")], "Passwords must match."),
   });
+
   const changePasswordHanlder = async () => {
     try {
       const { data } = await axios.put("/api/user/changePassword", {
@@ -44,6 +48,7 @@ export default function security({ user, tab }) {
       setError(error.response.data.message);
     }
   };
+
   return (
     <Layout session={user.user} tab={tab}>
       <Head>

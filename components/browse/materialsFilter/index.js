@@ -9,8 +9,10 @@ export default function MaterialsFilter({
   materialHandler,
   replaceQuery,
 }) {
+
   const router = useRouter();
   const [show, setShow] = useState(true);
+
   return (
     <div className={styles.filter}>
       <h3>

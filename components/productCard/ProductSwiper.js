@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 // import required modules
 import { Autoplay } from "swiper";
 import { useEffect } from "react";
+
 export default function ProductSwiper({ images }) {
   const swiperRef = useRef(null);
   useEffect(() => {

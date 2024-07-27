@@ -5,7 +5,9 @@ import { IoNotificationsSharp } from "react-icons/io5";
 import { notificationsData } from "../../../../data/notifications";
 //-----------------------
 export default function Notifications({}) {
+
   const [show, setShow] = useState(false);
+
   return (
     <div
       className={styles.dropdown}

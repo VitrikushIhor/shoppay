@@ -18,6 +18,7 @@ export default function Images({
   const dispatch = useDispatch();
   const fileInput = useRef(null);
   const [meta, field] = useField(props);
+
   const handleImages = (e) => {
     let files = Array.from(e.target.files);
     files.forEach((img, i) => {
@@ -78,6 +79,7 @@ export default function Images({
   const handleRemove = (image) => {
     setImages((images) => images.filter((item) => item !== image));
   };
+
   return (
     <div className={styles.images}>
       <div

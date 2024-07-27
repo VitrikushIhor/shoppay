@@ -7,12 +7,16 @@ import { TextField } from "@material-ui/core";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import styles from "./styles.module.scss";
+
 export default function ListItem({ coupon, setCoupons }) {
+
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [discount, setDiscount] = useState("");
   const tomorrow = new Date();
+
   tomorrow.setDate(tomorrow.getDate() + 1);
+
   const [startDate, setStartDate] = useState(coupon.startDate);
   const [endDate, setEndDate] = useState(coupon.endDate);
 
@@ -22,7 +26,9 @@ export default function ListItem({ coupon, setCoupons }) {
   const handleEndDate = (newValue) => {
     setEndDate(newValue);
   };
+
   const input = useRef(null);
+
   const handleRemove = async (id) => {
     try {
       const { data } = await axios.delete("/api/admin/coupon", {
@@ -34,6 +40,7 @@ export default function ListItem({ coupon, setCoupons }) {
       toast.error(error.response.data.message);
     }
   };
+
   const handleUpdate = async (id) => {
     try {
       const { data } = await axios.put("/api/admin/coupon", {
@@ -50,6 +57,7 @@ export default function ListItem({ coupon, setCoupons }) {
       toast.error(error.response.data.message);
     }
   };
+
   return (
     <li className={styles.list__item}>
       <input

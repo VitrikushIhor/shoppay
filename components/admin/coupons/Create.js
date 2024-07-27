@@ -8,10 +8,14 @@ import axios from "axios";
 import { TextField } from "@material-ui/core";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
 export default function Create({ setCoupons }) {
+
   const [name, setName] = useState("");
   const [discount, setDiscount] = useState(0);
+
   const tomorrow = new Date();
+
   tomorrow.setDate(tomorrow.getDate() + 1);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(tomorrow);
@@ -19,9 +23,11 @@ export default function Create({ setCoupons }) {
   const handleStartDate = (newValue) => {
     setStartDate(newValue);
   };
+
   const handleEndDate = (newValue) => {
     setEndDate(newValue);
   };
+
   const validate = Yup.object({
     name: Yup.string()
       .required("Coupon name is required.")
@@ -32,6 +38,7 @@ export default function Create({ setCoupons }) {
       .min(1, "Discount must be atleast 1%")
       .max(99, "Discount must be 99% or less"),
   });
+
   const submitHandler = async () => {
     try {
       if (startDate.toString() == endDate.toString()) {
@@ -55,6 +62,7 @@ export default function Create({ setCoupons }) {
       toast.error(error.response.data.message);
     }
   };
+
   return (
     <>
       <Formik

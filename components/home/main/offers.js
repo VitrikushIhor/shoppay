@@ -1,15 +1,15 @@
 import styles from "./styles.module.scss";
-import { offersAarray } from "../../../data/home";
-import { useRef, useState } from "react";
+import {offersAarray} from "../../../data/home";
+import {useRef, useState} from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import {Swiper, SwiperSlide} from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 
 // import required modules
-import { Pagination, Navigation } from "swiper";
+import {Pagination, Navigation} from "swiper";
 import Link from "next/link";
 
 export default function Offers() {
@@ -17,7 +17,7 @@ export default function Offers() {
     <div className={styles.offers}>
       <div className={styles.offers__text}>
         <p>
-          use code <b>“MHAJJI”</b> for 30% off all products.
+          use code <b>“Shoppay”</b> for 30% off all products.
         </p>
         <Link href="/browse">Shop now</Link>
       </div>
@@ -34,7 +34,7 @@ export default function Offers() {
         {offersAarray.map((offer) => (
           <SwiperSlide>
             <Link href="">
-              <img src={offer.image} alt="" />
+              <img src={offer.image} alt=""/>
             </Link>
             <span>{offer.price}$</span>
             <span>-{offer.discount}%</span>

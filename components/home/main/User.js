@@ -45,30 +45,22 @@ export default function User() {
         <ul className={styles.user__links}>
           <li>
             <Link href="/profile">
-              <a>
                 <IoSettingsOutline />
-              </a>
             </Link>
           </li>
           <li>
             <Link href="">
-              <a>
                 <HiOutlineClipboardList />
-              </a>
             </Link>
           </li>
           <li>
             <Link href="">
-              <a>
                 <AiOutlineMessage />
-              </a>
             </Link>
           </li>
           <li>
             <Link href="">
-              <a>
                 <BsHeart />
-              </a>
             </Link>
           </li>
         </ul>

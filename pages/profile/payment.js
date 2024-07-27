@@ -6,11 +6,14 @@ import Payment from "../../components/checkout/payment";
 import styles from "../../styles/profile.module.scss";
 import axios from "axios";
 import { useRouter } from "next/router";
+
 export default function payment({ user, tab, defaultPaymentMethod }) {
+
   const router = useRouter();
   const [dbPM, setDbPM] = useState(defaultPaymentMethod);
   const [paymentMethod, setPaymentMethod] = useState(defaultPaymentMethod);
   const [error, setError] = useState("");
+
   const handlePM = async () => {
     try {
       const { data } = await axios.put("/api/user/changePM", {
@@ -23,6 +26,7 @@ export default function payment({ user, tab, defaultPaymentMethod }) {
       setError(error.response.data.message);
     }
   };
+
   return (
     <Layout session={user.user} tab={tab}>
       <div className={styles.header}>

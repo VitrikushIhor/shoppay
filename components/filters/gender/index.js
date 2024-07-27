@@ -4,9 +4,12 @@ import { BsPlusLg } from "react-icons/bs";
 import Link from "next/link";
 import { useState } from "react";
 import Size from "./Size";
+
 export default function GenderFilter() {
+
   const [show, setShow] = useState(true);
   const genders = ["Men", "women", "Unisex"];
+
   return (
     <div className={styless.filter}>
       <h3 onClick={() => setShow((prev) => !prev)}>

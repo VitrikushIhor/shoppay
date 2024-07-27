@@ -13,9 +13,11 @@ export default function Style({
   colorImage,
   ...props
 }) {
+
   const dispatch = useDispatch();
   const fileInput = useRef(null);
   const [meta, field] = useField(props);
+
   const handleImage = (e) => {
     let img = e.target.files[0];
     if (

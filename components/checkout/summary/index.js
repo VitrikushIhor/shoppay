@@ -14,13 +14,16 @@ export default function Summary({
   paymentMethod,
   selectedAddress,
 }) {
+
   const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState("");
   const [error, setError] = useState("");
   const [order_error, setOrder_Error] = useState("");
+
   const validateCoupon = Yup.object({
     coupon: Yup.string().required("Pleace enter a coupon first !"),
   });
+
   const applyCouponHandler = async () => {
     const res = await applyCoupon(coupon);
     if (res.message) {
@@ -31,6 +34,7 @@ export default function Summary({
       setError("");
     }
   };
+
   const placeOrderHandler = async () => {
     try {
       if (paymentMethod == "") {
@@ -53,6 +57,7 @@ export default function Summary({
       setOrder_Error(error.response.data.message);
     }
   };
+
   return (
     <div className={styles.summary}>
       <div className={styles.header}>

@@ -11,19 +11,25 @@ import { uploadImages } from "../../../requests/upload";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { FaLastfmSquare } from "react-icons/fa";
+
 export default function AddReview({ product, setReviews }) {
+
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(hideDialog());
   }, []);
+
   const [size, setSize] = useState("");
   const [style, setStyle] = useState("");
   const [fit, setFit] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState();
   const [images, setImages] = useState([]);
+
   let uploaded_images = [];
+
   const handleSubmit = async () => {
     setLoading(true);
     let msgs = [];
@@ -95,6 +101,7 @@ export default function AddReview({ product, setReviews }) {
     }
     setLoading(false);
   };
+
   return (
     <div className={styles.reviews__add}>
       <DialogModal />

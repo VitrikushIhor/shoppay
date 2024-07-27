@@ -1,19 +1,21 @@
-import { Tooltip } from "@mui/material";
+import {Tooltip} from "@mui/material";
 import styles from "./styles.module.scss";
-import { AiTwotoneStar } from "react-icons/ai";
-import { IoIosArrowDown } from "react-icons/io";
-import { BsCheckLg } from "react-icons/bs";
-import { useState } from "react";
+import {AiTwotoneStar} from "react-icons/ai";
+import {IoIosArrowDown} from "react-icons/io";
+import {BsCheckLg} from "react-icons/bs";
+import {useState} from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
+
 export default function HeadingFilters({
-  priceHandler,
-  multiPriceHandler,
-  shippingHandler,
-  replaceQuery,
-  ratingHandler,
-  sortHandler,
-}) {
+                                         priceHandler,
+                                         multiPriceHandler,
+                                         shippingHandler,
+                                         replaceQuery,
+                                         ratingHandler,
+                                         sortHandler,
+                                       }) {
+
   const router = useRouter();
   const [show, setShow] = useState(false);
   const check = replaceQuery(
@@ -22,7 +24,9 @@ export default function HeadingFilters({
   );
   const checkRating = replaceQuery("rating", "4");
   const sortQuery = router.query.sort || "";
+
   console.log("sortQuery", sortQuery);
+
   return (
     <div className={styles.filters}>
       <div className={styles.filters__price}>
@@ -50,7 +54,7 @@ export default function HeadingFilters({
           onClick={() => multiPriceHandler(0, 10)}
         >
           <button className={styles.tooltip_btn}>
-            <span style={{ height: "10%" }}></span>
+            <span style={{height: "10%"}}></span>
           </button>
         </Tooltip>
         <Tooltip
@@ -60,7 +64,7 @@ export default function HeadingFilters({
           onClick={() => multiPriceHandler(10, 50)}
         >
           <button className={styles.tooltip_btn}>
-            <span style={{ height: "25%" }}></span>
+            <span style={{height: "25%"}}></span>
           </button>
         </Tooltip>
         <Tooltip
@@ -70,7 +74,7 @@ export default function HeadingFilters({
           onClick={() => multiPriceHandler(50, 100)}
         >
           <button className={styles.tooltip_btn}>
-            <span style={{ height: "50%" }}></span>
+            <span style={{height: "50%"}}></span>
           </button>
         </Tooltip>
         <Tooltip
@@ -80,7 +84,7 @@ export default function HeadingFilters({
           onClick={() => multiPriceHandler(100, 500)}
         >
           <button className={styles.tooltip_btn}>
-            <span style={{ height: "75%" }}></span>
+            <span style={{height: "75%"}}></span>
           </button>
         </Tooltip>
         <Tooltip
@@ -90,7 +94,7 @@ export default function HeadingFilters({
           onClick={() => multiPriceHandler(500, "")}
         >
           <button className={styles.tooltip_btn}>
-            <span style={{ height: "100%" }}></span>
+            <span style={{height: "100%"}}></span>
           </button>
         </Tooltip>
       </div>
@@ -117,10 +121,10 @@ export default function HeadingFilters({
           checked={router.query.rating == "4"}
         />
         <label htmlFor="rating">
-          <AiTwotoneStar />
-          <AiTwotoneStar />
-          <AiTwotoneStar />
-          <AiTwotoneStar /> & up
+          <AiTwotoneStar/>
+          <AiTwotoneStar/>
+          <AiTwotoneStar/>
+          <AiTwotoneStar/> & up
         </label>
       </div>
       <div className={styles.filters__sort}>
@@ -135,9 +139,9 @@ export default function HeadingFilters({
               ? "Recommend"
               : sortingOptions.find((x) => x.value == sortQuery).name}
             <div
-              style={{ tarnsform: `${show ? "rotate(180deg)" : "rotate(0"}` }}
+              style={{tarnsform: `${show ? "rotate(180deg)" : "rotate(0"}`}}
             >
-              <IoIosArrowDown />
+              <IoIosArrowDown/>
             </div>
           </button>
           <ul
@@ -147,21 +151,21 @@ export default function HeadingFilters({
           >
             {sortingOptions.map((option, i) => (
               <li key={i} onClick={() => sortHandler(option.value)}>
-                <a>
+                <Link href={""} key={i}>
                   {sortQuery == option.value ? (
                     <b>{option.name}</b>
                   ) : (
                     option.name
                   )}{" "}
-                  {sortQuery == option.value ? <BsCheckLg /> : ""}
+                  {sortQuery == option.value ? <BsCheckLg/> : ""}
                   {sortQuery !== option.value ? (
                     <div className={styles.check}>
-                      <BsCheckLg />
+                      <BsCheckLg/>
                     </div>
                   ) : (
                     ""
                   )}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

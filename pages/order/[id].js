@@ -17,6 +17,7 @@ export default function order({
   paypal_client_id,
   stripe_public_key,
 }) {
+
   function reducer(state, action) {
     switch (action.type) {
       case "PAY_REQUEST":
@@ -29,6 +30,7 @@ export default function order({
         return { ...state, loading: false, success: false, error: false };
     }
   }
+
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const [state,dispatch] = useReducer(reducer, {
@@ -73,6 +75,7 @@ export default function order({
       });
   }
   console.log(orderData._id);
+
   function onApproveHandler(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {

@@ -8,6 +8,7 @@ import { TbEdit } from "react-icons/tb";
 import { AiOutlineEye } from "react-icons/ai";
 import { RiDeleteBin2Line } from "react-icons/ri";
 export default function ProductCard({ product }) {
+
   return (
     <div className={styles.product}>
       <h1 className={styles.product__name}>{product.name}</h1>

@@ -1,11 +1,14 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
 import TableSelect from "./TableSelect";
+
 export default function TableHeader({ reviews, allSizes, colors }) {
+
   const [rating, setRating] = useState();
   const [size, setSize] = useState();
   const [style, setStyle] = useState();
   const [order, setOrder] = useState();
+
   return (
     <div className={styles.table__header}>
       <TableSelect
@@ -35,6 +38,7 @@ export default function TableHeader({ reviews, allSizes, colors }) {
     </div>
   );
 }
+
 const ratings = [
   {
     text: "All",

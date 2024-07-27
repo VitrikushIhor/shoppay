@@ -20,42 +20,43 @@ import PatternsFilter from "../components/browse/patternsFilter";
 import MaterialsFilter from "../components/browse/materialsFilter";
 import GenderFilter from "../components/browse/genderFilter";
 import HeadingFilters from "../components/browse/headingFilters";
-import { useRouter } from "next/router";
-import { Pagination } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import {useRouter} from "next/router";
+import {Pagination} from "@mui/material";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
+
 export default function Browse({
-  categories,
-  subCategories,
-  products,
-  sizes,
-  colors,
-  brands,
-  stylesData,
-  patterns,
-  materials,
-  paginationCount,
-  country,
-}) {
+                                 categories,
+                                 subCategories,
+                                 products,
+                                 sizes,
+                                 colors,
+                                 brands,
+                                 stylesData,
+                                 patterns,
+                                 materials,
+                                 paginationCount,
+                                 country,
+                               }) {
   const router = useRouter();
   const filter = ({
-    search,
-    category,
-    brand,
-    style,
-    size,
-    color,
-    pattern,
-    material,
-    gender,
-    price,
-    shipping,
-    rating,
-    sort,
-    page,
-  }) => {
+                    search,
+                    category,
+                    brand,
+                    style,
+                    size,
+                    color,
+                    pattern,
+                    material,
+                    gender,
+                    price,
+                    shipping,
+                    rating,
+                    sort,
+                    page,
+                  }) => {
     const path = router.pathname;
-    const { query } = router;
+    const {query} = router;
     if (search) query.search = search;
     if (category) query.category = category;
     if (brand) query.brand = brand;
@@ -77,37 +78,37 @@ export default function Browse({
   };
   const searchHandler = (search) => {
     if (search == "") {
-      filter({ search: {} });
+      filter({search: {}});
     } else {
-      filter({ search });
+      filter({search});
     }
   };
   const categoryHandler = (category) => {
-    filter({ category });
+    filter({category});
   };
   const brandHandler = (brand) => {
-    filter({ brand });
+    filter({brand});
   };
   const styleHandler = (style) => {
-    filter({ style });
+    filter({style});
   };
   const sizeHandler = (size) => {
-    filter({ size });
+    filter({size});
   };
   const colorHandler = (color) => {
-    filter({ color });
+    filter({color});
   };
   const patternHandler = (pattern) => {
-    filter({ pattern });
+    filter({pattern});
   };
   const materialHandler = (material) => {
-    filter({ material });
+    filter({material});
   };
   const genderHandler = (gender) => {
     if (gender == "Unisex") {
-      filter({ gender: {} });
+      filter({gender: {}});
     } else {
-      filter({ gender });
+      filter({gender});
     }
   };
   const priceHandler = (price, type) => {
@@ -120,27 +121,28 @@ export default function Browse({
     } else {
       newPrice = `${min}_${price}`;
     }
-    filter({ price: newPrice });
+    filter({price: newPrice});
   };
   const multiPriceHandler = (min, max) => {
-    filter({ price: `${min}_${max}` });
+    filter({price: `${min}_${max}`});
   };
   const shippingHandler = (shipping) => {
-    filter({ shipping });
+    filter({shipping});
   };
   const ratingHandler = (rating) => {
-    filter({ rating });
+    filter({rating});
   };
   const sortHandler = (sort) => {
     if (sort == "") {
-      filter({ sort: {} });
+      filter({sort: {}});
     } else {
-      filter({ sort });
+      filter({sort});
     }
   };
   const pageHandler = (e, page) => {
-    filter({ page });
+    filter({page});
   };
+
   //----------
   function checkChecked(queryName, value) {
     if (router.query[queryName]?.search(value) !== -1) {
@@ -148,6 +150,7 @@ export default function Browse({
     }
     return false;
   }
+
   function replaceQuery(queryName, value) {
     const existedQuery = router.query[queryName];
     const valueCheck = existedQuery?.search(value);
@@ -177,6 +180,7 @@ export default function Browse({
       active: existedQuery && valueCheck !== -1 ? true : false,
     };
   }
+
   //---------------------------------
   const [scrollY, setScrollY] = useState(0);
   const [height, setHeight] = useState(0);
@@ -193,12 +197,14 @@ export default function Browse({
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   console.log(scrollY, height);
   //---------------------------------
+
   return (
     <div className={styles.browse}>
       <div ref={headerRef}>
-        <Header searchHandler={searchHandler} country={country} />
+        <Header searchHandler={searchHandler} country={country}/>
       </div>
       <div className={styles.browse__container}>
         <div ref={el}>
@@ -206,7 +212,7 @@ export default function Browse({
           <div className={styles.browse__tags}>
             {categories.map((c) => (
               <Link href="" key={c._id}>
-                <a>{c.name}</a>
+                {c.name}
               </Link>
             ))}
           </div>
@@ -231,7 +237,7 @@ export default function Browse({
               categoryHandler={categoryHandler}
               replaceQuery={replaceQuery}
             />
-            <SizesFilter sizes={sizes} sizeHandler={sizeHandler} />
+            <SizesFilter sizes={sizes} sizeHandler={sizeHandler}/>
             <ColorsFilter
               colors={colors}
               colorHandler={colorHandler}
@@ -273,7 +279,7 @@ export default function Browse({
             />
             <div className={styles.browse__store_products}>
               {products.map((product) => (
-                <ProductCard product={product} key={product._id} />
+                <ProductCard product={product} key={product._id}/>
               ))}
             </div>
             <div className={styles.pagination}>
@@ -293,7 +299,7 @@ export default function Browse({
 }
 
 export async function getServerSideProps(ctx) {
-  const { query } = ctx;
+  const {query} = ctx;
   //-------------------------------------------------->
   const searchQuery = query.search || "";
   const categoryQuery = query.category || "";
@@ -336,117 +342,117 @@ export async function getServerSideProps(ctx) {
   const search =
     searchQuery && searchQuery !== ""
       ? {
-          name: {
-            $regex: searchQuery,
-            $options: "i",
-          },
-        }
+        name: {
+          $regex: searchQuery,
+          $options: "i",
+        },
+      }
       : {};
   const category =
-    categoryQuery && categoryQuery !== "" ? { category: categoryQuery } : {};
+    categoryQuery && categoryQuery !== "" ? {category: categoryQuery} : {};
 
   const style =
     styleQuery && styleQuery !== ""
       ? {
-          "details.value": {
-            $regex: styleSearchRegex,
-            $options: "i",
-          },
-        }
+        "details.value": {
+          $regex: styleSearchRegex,
+          $options: "i",
+        },
+      }
       : {};
   const size =
     sizeQuery && sizeQuery !== ""
       ? {
-          "subProducts.sizes.size": {
-            $regex: sizeSearchRegex,
-            $options: "i",
-          },
-        }
+        "subProducts.sizes.size": {
+          $regex: sizeSearchRegex,
+          $options: "i",
+        },
+      }
       : {};
   const color =
     colorQuery && colorQuery !== ""
       ? {
-          "subProducts.color.color": {
-            $regex: colorSearchRegex,
-            $options: "i",
-          },
-        }
+        "subProducts.color.color": {
+          $regex: colorSearchRegex,
+          $options: "i",
+        },
+      }
       : {};
   const brand =
     brandQuery && brandQuery !== ""
       ? {
-          brand: {
-            $regex: brandSearchRegex,
-            $options: "i",
-          },
-        }
+        brand: {
+          $regex: brandSearchRegex,
+          $options: "i",
+        },
+      }
       : {};
   const pattern =
     patternQuery && patternQuery !== ""
       ? {
-          "details.value": {
-            $regex: patternSearchRegex,
-            $options: "i",
-          },
-        }
+        "details.value": {
+          $regex: patternSearchRegex,
+          $options: "i",
+        },
+      }
       : {};
   const material =
     materialQuery && materialQuery !== ""
       ? {
-          "details.value": {
-            $regex: materialSearchRegex,
-            $options: "i",
-          },
-        }
+        "details.value": {
+          $regex: materialSearchRegex,
+          $options: "i",
+        },
+      }
       : {};
   const gender =
     genderQuery && genderQuery !== ""
       ? {
-          "details.value": {
-            $regex: genderQuery,
-            $options: "i",
-          },
-        }
+        "details.value": {
+          $regex: genderQuery,
+          $options: "i",
+        },
+      }
       : {};
   const price =
     priceQuery && priceQuery !== ""
       ? {
-          "subProducts.sizes.price": {
-            $gte: Number(priceQuery[0]) || 0,
-            $lte: Number(priceQuery[1]) || Infinity,
-          },
-        }
+        "subProducts.sizes.price": {
+          $gte: Number(priceQuery[0]) || 0,
+          $lte: Number(priceQuery[1]) || Infinity,
+        },
+      }
       : {};
   const shipping =
     shippingQuery && shippingQuery == "0"
       ? {
-          shipping: 0,
-        }
+        shipping: 0,
+      }
       : {};
   const rating =
     ratingQuery && ratingQuery !== ""
       ? {
-          rating: {
-            $gte: Number(ratingQuery),
-          },
-        }
+        rating: {
+          $gte: Number(ratingQuery),
+        },
+      }
       : {};
   const sort =
     sortQuery == ""
       ? {}
       : sortQuery == "popular"
-      ? { rating: -1, "subProducts.sold": -1 }
-      : sortQuery == "newest"
-      ? { createdAt: -1 }
-      : sortQuery == "topSelling"
-      ? { "subProducts.sold": -1 }
-      : sortQuery == "topReviewed"
-      ? { rating: -1 }
-      : sortQuery == "priceHighToLow"
-      ? { "subProducts.sizes.price": -1 }
-      : sortQuery == "priceLowToHigh"
-      ? { "subProducts.sizes.price": 1 }
-      : {};
+        ? {rating: -1, "subProducts.sold": -1}
+        : sortQuery == "newest"
+          ? {createdAt: -1}
+          : sortQuery == "topSelling"
+            ? {"subProducts.sold": -1}
+            : sortQuery == "topReviewed"
+              ? {rating: -1}
+              : sortQuery == "priceHighToLow"
+                ? {"subProducts.sizes.price": -1}
+                : sortQuery == "priceLowToHigh"
+                  ? {"subProducts.sizes.price": 1}
+                  : {};
   //-------------------------------------------------->
   //-------------------------------------------------->
   function createRegex(data, styleRegex) {
@@ -457,6 +463,7 @@ export async function getServerSideProps(ctx) {
     }
     return styleRegex;
   }
+
   let data = await axios
     .get("https://api.ipregistry.co/?key=r208izz0q0icseks")
     .then((res) => {
@@ -494,14 +501,14 @@ export async function getServerSideProps(ctx) {
       model: Category,
     })
     .lean();
-  let colors = await Product.find({ ...category }).distinct(
+  let colors = await Product.find({...category}).distinct(
     "subProducts.color.color"
   );
-  let brandsDb = await Product.find({ ...category }).distinct("brand");
-  let sizes = await Product.find({ ...category }).distinct(
+  let brandsDb = await Product.find({...category}).distinct("brand");
+  let sizes = await Product.find({...category}).distinct(
     "subProducts.sizes.size"
   );
-  let details = await Product.find({ ...category }).distinct("details");
+  let details = await Product.find({...category}).distinct("details");
   let stylesDb = filterArray(details, "Style");
   let patternsDb = filterArray(details, "Pattern Type");
   let materialsDb = filterArray(details, "Material");

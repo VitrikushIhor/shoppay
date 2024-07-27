@@ -21,6 +21,7 @@ export default function Links() {
     </div>
   );
 }
+
 const links = [
   {
     heading: "SHOPPAY",

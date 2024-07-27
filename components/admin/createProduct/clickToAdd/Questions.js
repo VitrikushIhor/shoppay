@@ -4,11 +4,13 @@ import { sizesList } from "../../../../data/sizes";
 import styles from "./styles.module.scss";
 
 export default function Questions({ questions, product, setProduct }) {
+
   const handleQuestion = (i, e) => {
     const values = [...questions];
     values[i][e.target.name] = e.target.value;
     setProduct({ ...product, questions: values });
   };
+
   const handleRemove = (i) => {
     if (questions.length > 0) {
       const values = [...questions];
@@ -16,6 +18,7 @@ export default function Questions({ questions, product, setProduct }) {
       setProduct({ ...product, questions: values });
     }
   };
+
   console.log("product questions", product.questions);
   return (
     <div>

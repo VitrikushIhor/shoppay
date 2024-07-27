@@ -1,7 +1,9 @@
 import styles from "./styles.module.scss";
 import { useState, useEffect } from "react";
 import { compareArrays } from "../../../utils/arrays_utils";
+
 export default function CartHeader({ cartItems, selected, setSelected }) {
+
   const [active, setActive] = useState();
   useEffect(() => {
     const check = compareArrays(cartItems, selected);

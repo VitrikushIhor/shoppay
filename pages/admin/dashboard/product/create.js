@@ -3,26 +3,27 @@ import Layout from "../../../../components/admin/layout";
 import db from "../../../../utils/db";
 import Product from "../../../../models/Product";
 import Category from "../../../../models/Category";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 import axios from "axios";
 import * as Yup from "yup";
-import { Form, Formik } from "formik";
+import {Form, Formik} from "formik";
 import SingularSelect from "../../../../components/selects/SingularSelect";
 import MultipleSelect from "../../../../components/selects/MultipleSelect";
 import AdminInput from "../../../../components/inputs/adminInput";
 import DialogModal from "../../../../components/dialogModal";
-import { useDispatch } from "react-redux";
-import { showDialog } from "../../../../store/DialogSlice";
+import {useDispatch} from "react-redux";
+import {showDialog} from "../../../../store/DialogSlice";
 import Images from "../../../../components/admin/createProduct/images";
 import Colors from "../../../../components/admin/createProduct/colors";
 import Style from "../../../../components/admin/createProduct/style";
 import Sizes from "../../../../components/admin/createProduct/clickToAdd/Sizes";
 import Details from "../../../../components/admin/createProduct/clickToAdd/Details";
 import Questions from "../../../../components/admin/createProduct/clickToAdd/Questions";
-import { validateCreateProduct } from "../../../../utils/validation";
+import {validateCreateProduct} from "../../../../utils/validation";
 import dataURItoBlob from "../../../../utils/dataURItoBlob";
-import { uploadImages } from "../../../../requests/upload";
+import {uploadImages} from "../../../../requests/upload";
+
 const initialState = {
   name: "",
   description: "",
@@ -59,7 +60,9 @@ const initialState = {
   ],
   shippingFee: "",
 };
-export default function create({ parents, categories }) {
+
+export default function create({parents, categories}) {
+
   const [product, setProduct] = useState(initialState);
   const [subs, setSubs] = useState([]);
   const [colorImage, setColorImage] = useState("");
@@ -67,10 +70,12 @@ export default function create({ parents, categories }) {
   const [description_images, setDescription_images] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
   console.log(product);
+
   useEffect(() => {
     const getParentData = async () => {
-      const { data } = await axios.get(`/api/product/${product.parent}`);
+      const {data} = await axios.get(`/api/product/${product.parent}`);
       console.log(data);
       if (data) {
         setProduct({
@@ -87,9 +92,10 @@ export default function create({ parents, categories }) {
     };
     getParentData();
   }, [product.parent]);
+
   useEffect(() => {
     async function getSubs() {
-      const { data } = await axios.get("/api/admin/subCategory", {
+      const {data} = await axios.get("/api/admin/subCategory", {
         params: {
           category: product.category,
         },
@@ -97,12 +103,15 @@ export default function create({ parents, categories }) {
       console.log(data);
       setSubs(data);
     }
+
     getSubs();
   }, [product.category]);
+
   const handleChange = (e) => {
-    const { value, name } = e.target;
-    setProduct({ ...product, [name]: value });
+    const {value, name} = e.target;
+    setProduct({...product, [name]: value});
   };
+
   const validate = Yup.object({
     name: Yup.string()
       .required("Please add a name")
@@ -120,6 +129,7 @@ export default function create({ parents, categories }) {
     color: Yup.string().required("Please add a color"),
     description: Yup.string().required("Please add a description"),
   });
+
   const createProduct = async () => {
     let test = validateCreateProduct(product, images);
     if (test == "valid") {
@@ -133,8 +143,10 @@ export default function create({ parents, categories }) {
       );
     }
   };
-  const uploaded_images = [];
-  const style_img = "";
+
+  let uploaded_images = [];
+  let style_img = "";
+
   const createProductHandler = async () => {
     setLoading(true);
     if (images) {
@@ -159,7 +171,7 @@ export default function create({ parents, categories }) {
       style_img = cloudinary_style_img[0].url;
     }
     try {
-      const { data } = await axios.post("/api/admin/product", {
+      const {data} = await axios.post("/api/admin/product", {
         ...product,
         images: uploaded_images,
         color: {
@@ -174,6 +186,7 @@ export default function create({ parents, categories }) {
       toast.error(error.response.data.message);
     }
   };
+
   return (
     <Layout>
       <div className={styles.header}>Create Product</div>
@@ -219,7 +232,7 @@ export default function create({ parents, categories }) {
               {product.color.color && (
                 <span
                   className={styles.color_span}
-                  style={{ background: `${product.color.color}` }}
+                  style={{background: `${product.color.color}`}}
                 ></span>
               )}
             </div>

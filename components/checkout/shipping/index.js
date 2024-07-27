@@ -19,6 +19,7 @@ import { IoMdArrowDropupCircle } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import {validateShipping} from "../../../utils/validations/shipping";
+
 const initialValues = {
   firstName: "",
   lastName: "",
@@ -30,6 +31,7 @@ const initialValues = {
   address2: "",
   country: "",
 };
+
 export default function Shipping({ user, addresses, setAddresses, profile }) {
 
   const [shipping, setShipping] = useState(initialValues);

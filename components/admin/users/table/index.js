@@ -23,6 +23,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import styles from "./styles.module.scss";
 import { RiDeleteBin7Fill } from "react-icons/ri";
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;

@@ -11,11 +11,14 @@ import Link from "next/link";
 import DotLoaderSpinner from "../../components/loaders/dotLoader";
 import axios from "axios";
 import { getSession } from "next-auth/react";
+
 export default function forgot() {
+
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState("");
+
   const emailValidation = Yup.object({
     email: Yup.string()
       .required(
@@ -23,6 +26,7 @@ export default function forgot() {
       )
       .email("Enter a valid email address."),
   });
+
   const forgotHandler = async () => {
     try {
       setLoading(true);
@@ -39,6 +43,7 @@ export default function forgot() {
       setError(error.response.data.message);
     }
   };
+
   return (
     <>
       {loading && <DotLoaderSpinner loading={loading} />}

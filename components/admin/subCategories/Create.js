@@ -6,9 +6,12 @@ import AdminInput from "../../inputs/adminInput";
 import { toast } from "react-toastify";
 import axios from "axios";
 import SingularSelect from "../../selects/SingularSelect";
+
 export default function Create({ categories, setSubCategories }) {
+
   const [name, setName] = useState("");
   const [parent, setParent] = useState("");
+
   const validate = Yup.object({
     name: Yup.string()
       .required("SubCategory name is required.")
@@ -20,6 +23,7 @@ export default function Create({ categories, setSubCategories }) {
       ) */
     parent: Yup.string().required("Please choose a parent category."),
   });
+
   const submitHandler = async () => {
     try {
       const { data } = await axios.post("/api/admin/subCategory", {
@@ -34,6 +38,7 @@ export default function Create({ categories, setSubCategories }) {
       toast.error(error.response.data.message);
     }
   };
+
   return (
     <>
       <Formik

@@ -10,9 +10,11 @@ export default function Colors({
   colorImage,
   ...props
 }) {
+
   const [toggle, setToggle] = useState(false);
   const [colors, setColors] = useState([]);
   const [field, meta] = useField(props);
+
   const renderSwatches = () => {
     return colors.map((color, id) => (
       <div

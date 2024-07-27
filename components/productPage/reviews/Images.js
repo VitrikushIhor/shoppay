@@ -4,8 +4,10 @@ import { MdOutlineRemoveCircle } from "react-icons/md";
 import styles from "./styles.module.scss";
 
 export default function Images({ images, setImages }) {
+
   const [error, setError] = useState("");
   const inputRef = useRef(null);
+
   const handleImages = (e) => {
     let files = Array.from(e.target.files);
     console.log(files);
@@ -38,12 +40,14 @@ export default function Images({ images, setImages }) {
       }
     });
   };
+
   const removeImage = (image) => {
     setImages((images) => images.filter((img) => img !== image));
     if (images.length <= 3) {
       setError("");
     }
   };
+
   return (
     <div>
       <input

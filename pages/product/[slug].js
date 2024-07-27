@@ -13,12 +13,16 @@ import { useState } from "react";
 import Infos from "../../components/productPage/infos";
 import Reviews from "../../components/productPage/reviews";
 import ProductsSwiper from "../../components/productsSwiper";
+
 export default function product({ product, related }) {
+
   const [activeImg, setActiveImg] = useState("");
+
   const country = {
     name: "Morocco",
     flag: "https://cdn-icons-png.flaticon.com/512/197/197551.png?w=360",
   };
+
   return (
     <>
       <Head>

@@ -4,11 +4,13 @@ import { sizesList } from "../../../../data/sizes";
 import styles from "./styles.module.scss";
 
 export default function Details({ details, product, setProduct }) {
+
   const handleDetails = (i, e) => {
     const values = [...details];
     values[i][e.target.name] = e.target.value;
     setProduct({ ...product, details: values });
   };
+
   const handleRemove = (i) => {
     if (details.length > 0) {
       const values = [...details];
@@ -16,7 +18,7 @@ export default function Details({ details, product, setProduct }) {
       setProduct({ ...product, details: values });
     }
   };
-  console.log("product details", product.details);
+
   return (
     <div>
       <div className={styles.header}>Details</div>

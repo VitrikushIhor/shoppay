@@ -1,13 +1,16 @@
 import Link from "next/link";
-import React, { useState } from "react";
-import { FaMinus } from "react-icons/fa";
-import { BsPlusLg } from "react-icons/bs";
-import { useRouter } from "next/router";
-export default function Card({ category, subCategories }) {
+import React, {useState} from "react";
+import {FaMinus} from "react-icons/fa";
+import {BsPlusLg} from "react-icons/bs";
+import {useRouter} from "next/router";
+
+export default function Card({category, subCategories}) {
+
   const router = useRouter();
   const path = router.asPath;
   console.log("router", router);
   const [showsubFilter, setShowsubFilter] = useState(false);
+
   return (
     <>
       <section>
@@ -29,9 +32,9 @@ export default function Card({ category, subCategories }) {
               });
             }}
           >
-            <a>{category.name}</a>
+            <Link href={""}>{category.name}</Link>
           </label>
-          <span>{showsubFilter ? <FaMinus /> : <BsPlusLg />}</span>
+          <span>{showsubFilter ? <FaMinus/> : <BsPlusLg/>}</span>
         </li>
         <ul>
           {subCategories.length &&
@@ -47,9 +50,9 @@ export default function Card({ category, subCategories }) {
                   });
                 }}
               >
-                <input type="radio" name="filter" />
+                <input type="radio" name="filter"/>
                 <Link href="">
-                  <a>{s.name}</a>
+                  {s.name}
                 </Link>
               </li>
             ))}

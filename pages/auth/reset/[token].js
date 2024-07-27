@@ -13,13 +13,17 @@ import axios from "axios";
 import { getSession, signIn } from "next-auth/react";
 import jwt from "jsonwebtoken";
 import { Router } from "next/router";
+
 export default function reset({ user_id }) {
+
   console.log("user_id", user_id);
+
   const [password, setPassword] = useState("");
   const [conf_password, setConf_password] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState("");
+
   const passwordValidation = Yup.object({
     password: Yup.string()
       .required("Please enter your new password.")
@@ -29,6 +33,7 @@ export default function reset({ user_id }) {
       .required("Confirm your password.")
       .oneOf([Yup.ref("password")], "Passwords must match."),
   });
+
   const resetHandler = async () => {
     try {
       setLoading(true);
@@ -49,6 +54,7 @@ export default function reset({ user_id }) {
       setError(error.response.data.message);
     }
   };
+
   return (
     <>
       {loading && <DotLoaderSpinner loading={loading} />}

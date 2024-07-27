@@ -4,10 +4,13 @@ import { useState } from "react";
 import { AiFillDelete, AiTwotoneEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 import styles from "./styles.module.scss";
+
 export default function ListItem({ category, setCategories }) {
+
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const input = useRef(null);
+
   const handleRemove = async (id) => {
     try {
       const { data } = await axios.delete("/api/admin/category", {
@@ -19,6 +22,7 @@ export default function ListItem({ category, setCategories }) {
       toast.error(error.response.data.message);
     }
   };
+
   const handleUpdate = async (id) => {
     try {
       const { data } = await axios.put("/api/admin/category", {
@@ -32,6 +36,7 @@ export default function ListItem({ category, setCategories }) {
       toast.error(error.response.data.message);
     }
   };
+
   return (
     <li className={styles.list__item}>
       <input

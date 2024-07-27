@@ -4,8 +4,11 @@ import User from "../../models/User";
 import Shipping from "../../components/checkout/shipping";
 import styles from "../../styles/profile.module.scss";
 import { useState } from "react";
+
 export default function addresses({ user, tab }) {
+
   const [addresses, setAddresses] = useState(user.address.address);
+
   return (
     <Layout session={user.user} tab={tab}>
       <div className={styles.header}>

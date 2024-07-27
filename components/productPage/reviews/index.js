@@ -5,7 +5,9 @@ import AddReview from "./AddReview";
 import Select from "./Select";
 import styles from "./styles.module.scss";
 import Table from "./Table";
+
 export default function Reviews({ product }) {
+
   const { data: session } = useSession();
   const [rating, setRating] = useState("");
   const [reviews, setReviews] = useState(product.reviews);
