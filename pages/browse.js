@@ -19,7 +19,7 @@ import {
 } from "../utils/arrays_utils";
 
 
-import ProductCard from "../components/ProductCard/ProductCard";
+import ProductCardFixTest from "../components/productCard/ProductCardFixTest";
 import SizesFilter from "../components/browse/sizesFilter/SizesFilter";
 import ColorsFilter from "../components/browse/colorsFilter/ColorsFilter";
 import StylesFilter from "../components/browse/stylesFilter/StyleFilter";
@@ -283,7 +283,7 @@ export default function BrowsePage({
 						/>
 						<div className={styles.browse__store_products}>
 							{products.map((product) => (
-								<ProductCard product={product} key={product._id} />
+								<ProductCardFixTest product={product} key={product._id} />
 							))}
 						</div>
 						<div className={styles.pagination}>

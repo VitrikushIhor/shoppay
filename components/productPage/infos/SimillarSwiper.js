@@ -1,19 +1,19 @@
-import Link from 'next/Link';
+import { simillar_products } from "../../../data/products";
+import styles from "./styles.module.scss";
 
-import { simillar_products } from '../../../data/products';
-import styles from './styles.module.scss';
-
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 // import required modules
-import { Navigation } from 'swiper';
+import { Navigation } from "swiper";
+import Link from "next/link";
+
 export default function SimillarSwiper() {
 	return (
 		<Swiper

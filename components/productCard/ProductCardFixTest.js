@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ProductSwiper from "../productSwiper/ProductSwiper";
 import styles from "./styles.module.scss";
 
-export default function ProductCard({ product }) {
+export default function ProductCardFixTest({ product }) {
 	const [active, setActive] = useState(0);
 	const [images, setImages] = useState(product.subProducts[active]?.images);
 

@@ -1,20 +1,20 @@
-import Rating from '@mui/material/Rating';
-import axios from 'axios';
-import Link from 'next/Link';
-import { useRouter } from 'next/router';
-import { signIn, useSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
-import { BsHandbagFill, BsHeart } from 'react-icons/bs';
-import { TbPlus, TbMinus } from 'react-icons/tb';
-import { useDispatch, useSelector } from 'react-redux';
+import Rating from "@mui/material/Rating";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { BsHandbagFill, BsHeart } from "react-icons/bs";
+import { TbPlus, TbMinus } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
 
-import Accordian from './Accordian';
-import Share from './share/Share';
-import SimillarSwiper from './SimillarSwiper';
-import styles from './styles.module.scss';
-import { addToCart, updateCart } from '../../../store/cartSlice';
-import { hideDialog, showDialog } from '../../../store/DialogSlice';
-import DialogModal from '../../dialogModal/DialogModal';
+import Accordian from "./Accordian";
+import Share from "./share/Share";
+import SimillarSwiper from "./SimillarSwiper";
+import styles from "./styles.module.scss";
+import { addToCart, updateCart } from "../../../store/cartSlice";
+import { hideDialog, showDialog } from "../../../store/DialogSlice";
+import DialogModal from "../../dialogModal/DialogModal";
+import Link from "next/link";
 
 export default function Infos({ product, setActiveImg }) {
 	const router = useRouter();
@@ -22,8 +22,8 @@ export default function Infos({ product, setActiveImg }) {
 	const { data: session } = useSession();
 	const [size, setSize] = useState(router.query.size);
 	const [qty, setQty] = useState(1);
-	const [error, setError] = useState('');
-	const [success, setSuccess] = useState('');
+	const [error, setError] = useState("");
+	const [success, setSuccess] = useState("");
 	const { cart } = useSelector((state) => ({ ...state }));
 
 	useEffect(() => {
@@ -31,7 +31,7 @@ export default function Infos({ product, setActiveImg }) {
 	}, []);
 
 	useEffect(() => {
-		setSize('');
+		setSize("");
 		setQty(1);
 	}, [router.query.style]);
 
@@ -43,7 +43,7 @@ export default function Infos({ product, setActiveImg }) {
 
 	const addToCartHandler = async () => {
 		if (!router.query.size) {
-			setError('Please Select a size');
+			setError("Please Select a size");
 			return;
 		}
 		const { data } = await axios.get(
@@ -52,10 +52,10 @@ export default function Infos({ product, setActiveImg }) {
 
 		if (qty > data.quantity) {
 			setError(
-				'The Quantity you have choosed is more than in stock. Try and lower the Qty',
+				"The Quantity you have choosed is more than in stock. Try and lower the Qty",
 			);
 		} else if (data.quantity < 1) {
-			setError('This Product is out of stock.');
+			setError("This Product is out of stock.");
 			return;
 		} else {
 			let _uid = `${data._id}_${product.style}_${router.query.size}`;
@@ -88,17 +88,17 @@ export default function Infos({ product, setActiveImg }) {
 			if (!session) {
 				return signIn();
 			}
-			const { data } = await axios.put('/api/user/wishlist', {
+			const { data } = await axios.put("/api/user/wishlist", {
 				product_id: product._id,
 				style: product.style,
 			});
 			dispatch(
 				showDialog({
-					header: 'Product Added to Whishlist Successfully',
+					header: "Product Added to Whishlist Successfully",
 					msgs: [
 						{
 							msg: data.message,
-							type: 'success',
+							type: "success",
 						},
 					],
 				}),
@@ -106,11 +106,11 @@ export default function Infos({ product, setActiveImg }) {
 		} catch (error) {
 			dispatch(
 				showDialog({
-					header: 'Whishlist Error',
+					header: "Whishlist Error",
 					msgs: [
 						{
 							msg: error.response.data.message,
-							type: 'error',
+							type: "error",
 						},
 					],
 				}),
@@ -130,10 +130,10 @@ export default function Infos({ product, setActiveImg }) {
 						defaultValue={product.rating}
 						precision={0.5}
 						readOnly
-						style={{ color: '#FACF19' }}
+						style={{ color: "#FACF19" }}
 					/>
 					({product.numReviews}
-					{product.numReviews == 1 ? ' review' : ' reviews'})
+					{product.numReviews == 1 ? " review" : " reviews"})
 				</div>
 				<div className={styles.infos__price}>
 					{!size ? <h2>{product.priceRange}</h2> : <h1>{product.price}$</h1>}
@@ -143,18 +143,18 @@ export default function Infos({ product, setActiveImg }) {
 							<span>(-{product.discount}%)</span>
 						</h3>
 					) : (
-						''
+						""
 					)}
 				</div>
 				<span className={styles.infos__shipping}>
 					{product.shipping
 						? `+${product.shipping}$ Shipping fee`
-						: 'Free Shipping'}
+						: "Free Shipping"}
 				</span>
 				<span>
 					{size
 						? product.quantity
-						: product.sizes.reduce((start, next) => start + next.qty, 0)}{' '}
+						: product.sizes.reduce((start, next) => start + next.qty, 0)}{" "}
 					pieces available.
 				</span>
 				<div className={styles.infos__sizes}>
@@ -180,11 +180,11 @@ export default function Infos({ product, setActiveImg }) {
 					{product.colors &&
 						product.colors.map((color, i) => (
 							<span
-								className={i == router.query.style ? styles.active_color : ''}
+								className={i == router.query.style ? styles.active_color : ""}
 								onMouseOver={() =>
 									setActiveImg(product.subProducts[i].images[0].url)
 								}
-								onMouseLeave={() => setActiveImg('')}
+								onMouseLeave={() => setActiveImg("")}
 							>
 								<Link href={`/product/${product.slug}?style=${i}`}>
 									<img src={color.image} alt="" />
@@ -206,7 +206,7 @@ export default function Infos({ product, setActiveImg }) {
 				<div className={styles.infos__actions}>
 					<button
 						disabled={product.quantity < 1}
-						style={{ cursor: `${product.quantity < 1 ? 'not-allowed' : ''}` }}
+						style={{ cursor: `${product.quantity < 1 ? "not-allowed" : ""}` }}
 						onClick={() => addToCartHandler()}
 					>
 						<BsHandbagFill />

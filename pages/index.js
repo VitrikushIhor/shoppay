@@ -20,7 +20,7 @@ import Product from "../models/Product";
 import styles from "../styles/Home.module.scss";
 import db from "../utils/db";
 import Footer from "../components/footer/Footer";
-import ProductCard from "../components/productCard/ProductCard";
+import ProductCardFixTest from "../components/productCard/ProductCardFixTest";
 
 export default function HomePage({ country, products }) {
 	console.log("products", products);
@@ -63,7 +63,7 @@ export default function HomePage({ country, products }) {
 					<ProductsSwiper products={women_swiper} />
 					<div className={styles.products}>
 						{products.map((product) => (
-							<ProductCard product={product} key={product._id} />
+							<ProductCardFixTest product={product} key={product._id} />
 						))}
 					</div>
 				</div>
