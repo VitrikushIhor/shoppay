@@ -1,9 +1,10 @@
-import { google } from 'googleapis';
-import nodemailer from 'nodemailer';
+import { google } from "googleapis";
+import nodemailer from "nodemailer";
 
-import { activateEmailTemplate } from '../emails/activateEmailTemplate';
+import { activateEmailTemplate } from "../emails/activateEmailTemplate";
+
 const { OAuth2 } = google.auth;
-const OAUTH_PLAYGROUND = 'https://developers.google.com/oauthplayground';
+const OAUTH_PLAYGROUND = "https://developers.google.com/oauthplayground";
 
 const {
 	MAILING_SERVICE_CLIENT_ID,
@@ -27,9 +28,9 @@ export const sendEmail = (to, url, txt, subject, template) => {
 	});
 	const accessToken = oauth2Client.getAccessToken();
 	const smtpTransport = nodemailer.createTransport({
-		service: 'gmail',
+		service: "gmail",
 		auth: {
-			type: 'OAuth2',
+			type: "OAuth2",
 			user: SENDER_EMAIL_ADDRESS,
 			clientId: MAILING_SERVICE_CLIENT_ID,
 			clientSecret: MAILING_SERVICE_CLIENT_SECRET,
@@ -44,7 +45,11 @@ export const sendEmail = (to, url, txt, subject, template) => {
 		html: template(to, url),
 	};
 	smtpTransport.sendMail(mailOptions, (err, infos) => {
-		if (err) return err;
+		if (err) {
+			console.log(err);
+			return err;
+		}
+		console.log(infos);
 		return infos;
 	});
 };
