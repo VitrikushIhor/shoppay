@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint \"**/*.{js,jsx}\" --fix"
   },
   "dependencies": {
     "@emotion/core": "10.1.1",
@@ -64,7 +64,6 @@
     "node": "16.x"
   },
   "devDependencies": {
-    "eslint": "8.20.0",
     "prettier": "^3.3.3"
   }
 }
