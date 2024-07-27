@@ -61,7 +61,7 @@ export default NextAuth({
 				}
 				return session;
 			} catch (error) {
-				console.error("Session callback error:", error);
+				console.error("Session callback Error:", error);
 				return session;
 			}
 		},
