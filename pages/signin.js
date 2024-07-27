@@ -97,8 +97,10 @@ export default function SigninPage({ providers, callbackUrl, csrfToken }) {
 			password: login_password,
 		};
 		const res = await signIn("credentials", options);
+
 		setUser({ ...user, success: "", error: "" });
 		setLoading(false);
+
 		if (res?.error) {
 			setLoading(false);
 			setUser({ ...user, login_error: res?.error });
