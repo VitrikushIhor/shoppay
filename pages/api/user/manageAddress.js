@@ -1,17 +1,20 @@
-import nc from 'next-connect';
+import nc from "next-connect";
 
-import auth from '../../../middleware/auth';
-import User from '../../../models/User';
-import db from '../../../utils/db';
+import auth from "../../../middleware/auth";
+import User from "../../../models/User";
+import db from "../../../utils/db";
+
 const handler = nc().use(auth);
 
 handler.put(async (req, res) => {
 	try {
-		db.connectDb();
+		await db.connectDb();
 		const { id } = req.body;
+
 		let user = await User.findById(req.user);
 		let user_addresses = user.address;
 		let addresses = [];
+
 		for (let i = 0; i < user_addresses.length; i++) {
 			let temp_address = {};
 			if (user_addresses[i]._id == id) {
@@ -22,13 +25,16 @@ handler.put(async (req, res) => {
 				addresses.push(temp_address);
 			}
 		}
+
 		await user.updateOne(
 			{
 				address: addresses,
 			},
 			{ new: true },
 		);
-		db.disconnectDb();
+
+		await db.disconnectDb();
+
 		return res.json({ addresses });
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
@@ -37,16 +43,20 @@ handler.put(async (req, res) => {
 
 handler.delete(async (req, res) => {
 	try {
-		db.connectDb();
+		await db.connectDb();
+
 		const { id } = req.body;
 		const user = await User.findById(req.user);
+
 		await user.updateOne(
 			{
 				$pull: { address: { _id: id } },
 			},
 			{ new: true },
 		);
-		db.disconnectDb();
+
+		await db.disconnectDb();
+
 		res.json({ addresses: user.address.filter((a) => a._id != id) });
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
