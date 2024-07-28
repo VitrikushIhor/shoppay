@@ -8,12 +8,14 @@ const handler = nc().use(auth);
 
 handler.put(async (req, res) => {
 	try {
-		await db.connectDb();
+		await await db.connectDb();
 		const product = await Product.findById(req.query.id);
+
 		if (product) {
 			const exist = product.reviews.find(
 				(x) => x.reviewBy.toString() == req.user,
 			);
+
 			if (exist) {
 				await Product.updateOne(
 					{
@@ -36,17 +38,22 @@ handler.put(async (req, res) => {
 				);
 
 				const updatedProduct = await Product.findById(req.query.id);
+
 				updatedProduct.numReviews = updatedProduct.reviews.length;
 				updatedProduct.rating =
 					updatedProduct.reviews.reduce((a, r) => r.rating + a, 0) /
 					updatedProduct.reviews.length;
+
 				await updatedProduct.save();
 				await updatedProduct.populate('reviews.reviewBy');
 				await db.disconnectDb();
+
 				return res
 					.status(200)
 					.json({ reviews: updatedProduct.reviews.reverse() });
+
 			} else {
+
 				const review = {
 					reviewBy: req.user,
 					rating: req.body.rating,
@@ -56,15 +63,18 @@ handler.put(async (req, res) => {
 					style: req.body.style,
 					images: req.body.images,
 				};
+
 				product.reviews.push(review);
 				product.numReviews = product.reviews.length;
 				product.rating =
 					product.reviews.reduce((a, r) => r.rating + a, 0) /
 					product.reviews.length;
+
 				await product.save();
 				await product.populate('reviews.reviewBy');
 				await db.disconnectDb();
 				return res.status(200).json({ reviews: product.reviews.reverse() });
+
 			}
 		}
 	} catch (error) {

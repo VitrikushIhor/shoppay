@@ -9,6 +9,7 @@ const handler = nc().use(auth);
 handler.put(async (req, res) => {
 	await db.connectDb();
 	const order = await Order.findById(req.query.id);
+
 	if (order) {
 		order.isPaid = true;
 		order.paidAt = Date.now();
@@ -17,8 +18,10 @@ handler.put(async (req, res) => {
 			status: req.body.status,
 			email_address: req.body.email_address,
 		};
+
 		const newOrder = await order.save();
 		await db.disconnectDb();
+
 		res.json({ message: 'Order is paid.', order: newOrder });
 	} else {
 		await db.disconnectDb();

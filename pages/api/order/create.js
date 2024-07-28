@@ -8,7 +8,8 @@ const handler = nc().use(auth);
 
 handler.post(async (req, res) => {
 	try {
-		db.connectDb();
+		await db.connectDb();
+
 		const {
 			products,
 			shippingAddress,
@@ -17,7 +18,9 @@ handler.post(async (req, res) => {
 			totalBeforeDiscount,
 			couponApplied,
 		} = req.body;
+
 		const user = await User.findById(req.user);
+
 		const newOrder = await new Order({
 			user: user._id,
 			products,
@@ -27,10 +30,13 @@ handler.post(async (req, res) => {
 			totalBeforeDiscount,
 			couponApplied,
 		}).save();
-		db.disconnectDb();
+
+		await db.disconnectDb();
+
 		return res.json({
 			order_id: newOrder._id,
 		});
+
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: error.message });

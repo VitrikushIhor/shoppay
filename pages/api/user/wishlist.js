@@ -4,9 +4,10 @@ import auth from '../../../middleware/auth';
 import User from '../../../models/User';
 import db from '../../../utils/db';
 const handler = nc().use(auth);
+
 handler.put(async (req, res) => {
 	try {
-		db.connectDb();
+		await db.connectDb();
 		const { product_id, style } = req.body;
 		const user = await User.findById(req.user);
 		const exist = user.wishlist.find(
@@ -25,7 +26,7 @@ handler.put(async (req, res) => {
 				},
 			},
 		});
-		db.disconnectDb();
+		await db.disconnectDb();
 		res
 			.status(200)
 			.json({ message: 'Product succesfully added to your wishlist.' });

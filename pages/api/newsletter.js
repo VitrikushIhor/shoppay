@@ -2,6 +2,7 @@ import axios from 'axios';
 import nc from 'next-connect';
 
 const handler = nc();
+
 handler.post(async (req, res) => {
 	try {
 		const { email } = req.body;

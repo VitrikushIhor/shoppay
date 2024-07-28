@@ -12,6 +12,7 @@ cloudinary.config({
 	api_key: process.env.CLOUDINARY_KEY,
 	api_secret: process.env.CLOUDINARY_SECRET,
 });
+
 const handler = nc()
 	.use(
 		fileUpload({
@@ -19,11 +20,13 @@ const handler = nc()
 		}),
 	)
 	.use(imgMiddleware);
+
 export const config = {
 	api: {
 		bodyParser: false,
 	},
 };
+
 handler.post(async (req, res) => {
 	try {
 		const { path } = req.body;

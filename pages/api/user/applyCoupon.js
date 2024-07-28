@@ -1,22 +1,27 @@
-import nc from 'next-connect';
+import nc from "next-connect";
 
-import auth from '../../../middleware/auth';
-import Cart from '../../../models/Cart';
-import Coupon from '../../../models/Coupon';
-import User from '../../../models/User';
-import db from '../../../utils/db';
+import auth from "../../../middleware/auth";
+import Cart from "../../../models/Cart";
+import Coupon from "../../../models/Coupon";
+import User from "../../../models/User";
+import db from "../../../utils/db";
+
 const handler = nc().use(auth);
 
 handler.post(async (req, res) => {
 	try {
-		db.connectDb();
+		await db.connectDb();
 		const { coupon } = req.body;
+
 		const user = User.findById(req.user);
 		const checkCoupon = await Coupon.findOne({ coupon });
+
 		if (checkCoupon == null) {
-			return res.json({ message: 'Invalid coupon' });
+			return res.json({ message: "Invalid coupon" });
 		}
+
 		const { cartTotal } = await Cart.findOne({ user: req.user });
+
 		let totalAfterDiscount =
 			cartTotal - (cartTotal * checkCoupon.discount) / 100;
 
@@ -27,7 +32,7 @@ handler.post(async (req, res) => {
 			discount: checkCoupon.discount,
 		});
 
-		db.disconnectDb();
+		await db.disconnectDb();
 		return res.json({ addresses: user.address });
 	} catch (error) {
 		return res.status(500).json({ message: error.message });

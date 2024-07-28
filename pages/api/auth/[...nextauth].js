@@ -54,6 +54,7 @@ export default NextAuth({
 	],
 	callbacks: {
 		async session({ session, token }) {
+
 			try {
 				let user = await User.findById(token.sub);
 				if (user) {

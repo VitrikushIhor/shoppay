@@ -10,14 +10,18 @@ const handler = nc().use(auth).use(admin);
 
 handler.post(async (req, res) => {
 	try {
-		db.connectDb();
+		await db.connectDb();
+
 		if (req.body.parent) {
+
 			const parent = await Product.findById(req.body.parent);
 			if (!parent) {
 				return res.status(400).json({
 					message: 'Parent product not found !',
 				});
+
 			} else {
+
 				const newParent = await parent.updateOne(
 					{
 						$push: {
@@ -32,9 +36,12 @@ handler.post(async (req, res) => {
 					},
 					{ new: true },
 				);
+
 			}
 		} else {
+
 			req.body.slug = slugify(req.body.name);
+
 			const newProduct = new Product({
 				name: req.body.name,
 				description: req.body.description,
@@ -54,10 +61,14 @@ handler.post(async (req, res) => {
 					},
 				],
 			});
+
 			await newProduct.save();
+
 			res.status(200).json({ message: 'Product created Successfully.' });
+
 		}
-		db.disconnectDb();
+		await db.disconnectDb();
+
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
